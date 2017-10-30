@@ -14,13 +14,15 @@ public class WaterfallBar {
         TOTAL;
     }
 
-    public WaterfallBar (float yMin, float yMax, Type type) {
+    public WaterfallBar (float yMin, float yMax, Type type, String description) {
         this.yMin = yMin;
         this.yMax = yMax;
         this.type = type;
+        this.description = description;
     }
 
     public final float yMin;
     public final float yMax;
     public final Type type;
+    public final String description;
 }
