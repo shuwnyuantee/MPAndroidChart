@@ -3,6 +3,8 @@ package com.github.mikephil.charting.buffer;
 
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.data.WaterfallBar;
+
 
 public class BarBuffer extends AbstractBuffer<IBarDataSet> {
 
@@ -69,6 +71,18 @@ public class BarBuffer extends AbstractBuffer<IBarDataSet> {
                 } else {
                     top = y >= 0 ? y : 0;
                     bottom = y <= 0 ? y : 0;
+                }
+
+                // handle waterfall bar chart
+                if (e.getData() != null && e.getData() instanceof WaterfallBar) {
+                    WaterfallBar waterfallBar = (WaterfallBar) e.getData();
+
+                    float yMin = waterfallBar.yMin;
+                    float yMax = waterfallBar.yMax;
+                    WaterfallBar.Type type = waterfallBar.type;
+
+                    top = yMax;
+                    bottom = yMin;
                 }
 
                 // multiply the height of the rect with the phase
