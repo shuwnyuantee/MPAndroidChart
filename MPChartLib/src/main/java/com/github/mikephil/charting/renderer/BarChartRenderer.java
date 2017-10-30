@@ -11,6 +11,7 @@ import com.github.mikephil.charting.animation.ChartAnimator;
 import com.github.mikephil.charting.buffer.BarBuffer;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.WaterfallBar;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.highlight.Range;
 import com.github.mikephil.charting.interfaces.dataprovider.BarDataProvider;
@@ -246,6 +247,16 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
 
                         BarEntry entry = dataSet.getEntryForIndex(j / 4);
                         float val = entry.getY();
+
+                        if (entry.getData() != null && entry.getData() instanceof WaterfallBar) {
+                            WaterfallBar w = (WaterfallBar) entry.getData();
+
+                            if (w.type == WaterfallBar.Type.DECREASE) {
+                                val = w.yMin - w.yMax;
+                            } else if (w.type == WaterfallBar.Type.INCREASE) {
+                                val = w.yMax - w.yMin;
+                            }
+                        }
 
                         if (dataSet.isDrawValuesEnabled()) {
                             drawValue(c, dataSet.getValueFormatter(), val, entry, i, x,
